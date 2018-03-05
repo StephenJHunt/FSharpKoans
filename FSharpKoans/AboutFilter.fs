@@ -17,6 +17,7 @@ module ``16: Filtering a list`` =
                     | false -> inner rest out
                     | true -> inner rest (out @ [first])
             inner xs []
+
         filter [1; 2; 3; 4] |> should equal [1; 3]
         filter [10; 9; 8; 7] |> should equal [9; 7]
         filter [15; 2; 7] |> should equal [15; 7]
@@ -40,8 +41,9 @@ module ``16: Filtering a list`` =
                 |first::rest ->
                     match f first with
                     | false -> inner rest out
-                    | true -> inner rest (out @ [first])
+                    | true -> inner rest (out @ [first]) 
             inner xs []
+
         filter (fun x -> x > 19) [9; 5; 23; 66; 4] |> should equal [23; 66]
         filter (fun x -> String.length x = 4) ["moo"; "woof"; "yip"; "nyan"; "meow"]
         |> should equal ["woof"; "nyan"; "meow"]
