@@ -41,8 +41,12 @@ module ``19: Other list functions`` =
                 |[] -> tlist, flist
                 |first::rest ->
                     match f first with
-                    |true -> inner rest (tlist @ [first]) flist
-                    |false -> inner rest tlist (flist @ [first])
+                    |true -> 
+                        let tlist = tlist @ [first]
+                        inner rest tlist flist
+                    |false -> 
+                        let flist = flist @ [first]
+                        inner rest tlist flist
             inner xs [] []
         let a, b = partition (fun x -> x%2=0) [1;2;3;4;5;6;7;8;9;10]
         a |> should equal [2;4;6;8;10]
@@ -61,7 +65,10 @@ module ``19: Other list functions`` =
             let rec inner counter out =
                 match counter<n with
                 |false -> out
-                |true -> inner (counter+1) (out @ [f counter])
+                |true -> 
+                    let out = out @ [f counter]
+                    let counter = counter + 1
+                    inner counter out
             inner 0 []
         init 10 (fun x -> x*2) |> should equal [0;2;4;6;8;10;12;14;16;18]
         init 4 (sprintf "(%d)") |> should equal ["(0)";"(1)";"(2)";"(3)"]
@@ -127,7 +134,9 @@ module ``19: Other list functions`` =
                 |[] -> out
                 |first::rest ->
                     match p first with 
-                    |Some x -> inner rest (out @ [x])
+                    |Some x -> 
+                        let out = out @ [x]
+                        inner rest out
                     |None -> inner rest out
             inner xs []
         let f x =
@@ -150,7 +159,10 @@ module ``19: Other list functions`` =
             let rec inner rest i out =
                 match rest with
                 | [] -> out
-                | first::rest -> inner rest (i+1) (out @ [f i first])
+                | first::rest -> 
+                    let out = out @ [f i first]
+                    let i = i + 1
+                    inner rest i out
             inner xs 0 []
         mapi (fun i x -> -i, x+1) [9;8;7;6] |> should equal [0,10; -1,9; -2,8; -3,7]
         let hailstone i t =

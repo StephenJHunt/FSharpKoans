@@ -12,7 +12,9 @@ module ``15: Applying a map to a list`` =
             let rec inner rest out =
                 match rest with
                 |[] -> out
-                |first::rest -> inner rest (out @ [first+1])
+                |first::rest -> 
+                    let out = out @ [first+1]
+                    inner rest out
             inner xs []
         map [1; 2; 3; 4] |> should equal [2; 3; 4; 5]
         map [9; 8; 7; 6] |> should equal [10; 9; 8; 7]
@@ -26,7 +28,9 @@ module ``15: Applying a map to a list`` =
             let rec inner rest out =
                 match rest with
                 |[] -> out
-                |first::rest -> inner rest (out @ [first*2])
+                |first::rest ->
+                    let out = out @ [first * 2] 
+                    inner rest out
             inner xs []
         map [1; 2; 3; 4] |> should equal [2; 4; 6; 8]
         map [9; 8; 7; 6] |> should equal [18; 16; 14; 12]

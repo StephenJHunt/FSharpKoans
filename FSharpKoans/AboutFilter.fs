@@ -15,7 +15,9 @@ module ``16: Filtering a list`` =
                 |first::rest ->
                     match first%2<>0 with
                     | false -> inner rest out
-                    | true -> inner rest (out @ [first])
+                    | true ->
+                        let out = out @ [first] 
+                        inner rest out
             inner xs []
 
         filter [1; 2; 3; 4] |> should equal [1; 3]
@@ -41,7 +43,9 @@ module ``16: Filtering a list`` =
                 |first::rest ->
                     match f first with
                     | false -> inner rest out
-                    | true -> inner rest (out @ [first]) 
+                    | true -> 
+                        let out = out @ [first]
+                        inner rest out 
             inner xs []
 
         filter (fun x -> x > 19) [9; 5; 23; 66; 4] |> should equal [23; 66]
